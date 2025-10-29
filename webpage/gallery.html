@@ -3,104 +3,138 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery | John Godwin Gacho</title>
+  <title>Interactive Gallery</title>
 
   <style>
-    /* Reset */
+    /* --- RESET --- */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
     }
 
     body {
-      font-family: "Poppins", Arial, sans-serif;
-      background: radial-gradient(circle at top, #3b2f2f, #1c1a19);
-      color: white;
-      min-height: 100vh;
+      background-color: #f4f4f4;
       overflow-x: hidden;
     }
 
-    /* Header */
-    .header {
-      background-color: #b4764d;
-      padding: 15px 20px;
+    /* --- HEADER --- */
+    header {
+      background: linear-gradient(135deg, #b4764d, #8e5c39);
+      color: white;
       text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-      animation: slideDown 0.8s ease;
-    }
-
-    .header h1 {
+      padding: 20px;
       font-size: 1.8rem;
       letter-spacing: 1px;
+      text-transform: uppercase;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
-    /* Gallery Grid */
-    .grid-container {
+    /* --- GALLERY GRID --- */
+    .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 15px;
-      padding: 40px 30px;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 40px;
       justify-items: center;
-      animation: fadeIn 1.5s ease;
+      transition: all 0.3s ease;
     }
 
-    .grid-item {
+    .gallery-item {
       position: relative;
       overflow: hidden;
       border-radius: 15px;
-      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
     }
 
-    .grid-item img {
+    .gallery-item img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
-      border-radius: 15px;
     }
 
-    .grid-item:hover img {
-      transform: scale(1.1);
+    .gallery-item:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
 
-    .grid-item:hover {
-      box-shadow: 0 0 20px rgba(180, 118, 77, 0.6);
+    .gallery-item:hover img {
+      transform: scale(1.05);
     }
 
-    /* Lightbox */
+    /* --- OVERLAY ON HOVER --- */
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.4);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      font-size: 1.2rem;
+      font-weight: 500;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    }
+
+    .gallery-item:hover .overlay {
+      opacity: 1;
+    }
+
+    /* --- LIGHTBOX --- */
     .lightbox {
-      display: none;
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
       justify-content: center;
       align-items: center;
-      z-index: 100;
-      animation: fadeIn 0.5s ease;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+
+    .lightbox.active {
+      opacity: 1;
+      visibility: visible;
     }
 
     .lightbox img {
-      max-width: 85%;
+      max-width: 90%;
       max-height: 85%;
       border-radius: 10px;
-      box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-      transform: scale(0.9);
-      animation: popIn 0.4s ease forwards;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      animation: fadeIn 0.5s ease;
     }
 
-    /* Close Button */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
     .close-btn {
       position: absolute;
-      top: 20px;
-      right: 30px;
+      top: 30px;
+      right: 40px;
       font-size: 2rem;
       color: white;
       cursor: pointer;
@@ -109,98 +143,68 @@
 
     .close-btn:hover {
       color: #b4764d;
-      transform: scale(1.1);
-    }
-
-    /* Animations */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    @keyframes slideDown {
-      from { transform: translateY(-50px); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes popIn {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    /* Responsive Tweaks */
-    @media (max-width: 600px) {
-      .header h1 {
-        font-size: 1.5rem;
-      }
-
-      .grid-container {
-        padding: 20px;
-        gap: 10px;
-      }
+      transform: rotate(90deg);
     }
   </style>
 </head>
 
 <body>
-  <div class="header">
-    <h1>📸 Gallery</h1>
-  </div>
+  <header>Gallery Showcase</header>
 
-  <div class="grid-container">
-    <div class="grid-item" onclick="openLightbox('./pic1.jpg')">
-      <img src="./pic1.jpg" alt="Picture 1">
+  <section class="gallery">
+    <div class="gallery-item" onclick="openLightbox('./pic1.jpg')">
+      <img src="./pic1.jpg" alt="Gallery 1" />
+      <div class="overlay">Modern Design</div>
     </div>
-    <div class="grid-item" onclick="openLightbox('./g2.jpg')">
-      <img src="./g2.jpg" alt="Picture 2">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g3.jpg')">
-      <img src="./g3.jpg" alt="Picture 3">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g4.jpg')">
-      <img src="./g4.jpg" alt="Picture 4">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g5.jpg')">
-      <img src="./g5.jpg" alt="Picture 5">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g6.jpg')">
-      <img src="./g6.jpg" alt="Picture 6">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g7.jpg')">
-      <img src="./g7.jpg" alt="Picture 7">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g8.jpg')">
-      <img src="./g8.jpg" alt="Picture 8">
-    </div>
-    <div class="grid-item" onclick="openLightbox('./g9.jpg')">
-      <img src="./g9.jpg" alt="Picture 9">
-    </div>
-  </div>
 
-  <!-- Lightbox Section -->
-  <div id="lightbox" class="lightbox" onclick="closeLightbox(event)">
-    <span class="close-btn" onclick="closeLightbox(event)">&times;</span>
-    <img id="lightbox-img" src="" alt="Expanded Photo" />
+    <div class="gallery-item" onclick="openLightbox('./g2.jpg')">
+      <img src="./g2.jpg" alt="Gallery 2" />
+      <div class="overlay">Creative Concept</div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('./g3.jpg')">
+      <img src="./g3.jpg" alt="Gallery 3" />
+      <div class="overlay">Aesthetic View</div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('./g4.jpg')">
+      <img src="./g4.jpg" alt="Gallery 4" />
+      <div class="overlay">Sleek Design</div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('./g5.jpg')">
+      <img src="./g5.jpg" alt="Gallery 5" />
+      <div class="overlay">Realistic Scene</div>
+    </div>
+
+    <div class="gallery-item" onclick="openLightbox('./g6.jpg')">
+      <img src="./g6.jpg" alt="Gallery 6" />
+      <div class="overlay">Dynamic Style</div>
+    </div>
+  </section>
+
+  <div class="lightbox" id="lightbox">
+    <span class="close-btn" onclick="closeLightbox()">&times;</span>
+    <img id="lightbox-img" src="" alt="Expanded view" />
   </div>
 
   <script>
     const lightbox = document.getElementById("lightbox");
     const lightboxImg = document.getElementById("lightbox-img");
 
-    function openLightbox(imageSrc) {
-      lightbox.style.display = "flex";
-      lightboxImg.src = imageSrc;
+    function openLightbox(src) {
+      lightbox.classList.add("active");
+      lightboxImg.src = src;
     }
 
-    function closeLightbox(event) {
-      if (event.target === lightbox || event.target.classList.contains("close-btn")) {
-        lightbox.style.animation = "fadeOut 0.4s ease";
-        setTimeout(() => {
-          lightbox.style.display = "none";
-          lightbox.style.animation = "fadeIn 0.5s ease";
-        }, 300);
-      }
+    function closeLightbox() {
+      lightbox.classList.remove("active");
     }
+
+    // Close lightbox when clicking outside image
+    lightbox.addEventListener("click", (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
   </script>
 </body>
 </html>
