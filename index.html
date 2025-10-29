@@ -3,70 +3,89 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My Personal Web Page | John Godwin Gacho</title>
+  <title>John Godwin Gacho | Personal Webpage</title>
+
   <style>
-    /* Background & general styling */
-    body {
-      background: url("./webpage/pic4.jpg") no-repeat center center fixed;
-      background-size: cover;
+    /* Global Reset */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Body Background */
+    body {
       font-family: "Poppins", Arial, sans-serif;
+      background: url("./webpage/pic4.jpg") no-repeat center center fixed;
+      background-size: cover;
       color: white;
+      overflow-x: hidden;
     }
 
-    /* Overlay for readability */
+    /* Overlay to improve text readability */
     .overlay {
-      background-color: rgba(0, 0, 0, 0.6);
+      background: rgba(0, 0, 0, 0.7);
       min-height: 100vh;
-      padding: 40px;
+      padding: 50px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      animation: fadeIn 1.5s ease;
     }
 
-    /* Header */
+    /* Header Section */
     header {
       text-align: center;
       margin-bottom: 40px;
     }
 
     header h1 {
-      font-size: 2rem;
+      font-size: 2.2rem;
       letter-spacing: 1px;
+      background: linear-gradient(90deg, #ffb97b, #ffd5a5);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: slideDown 1s ease;
     }
 
     /* Navigation */
-    nav {
-      text-align: center;
-      margin-top: 10px;
-    }
-
     nav a {
       text-decoration: none;
       color: #ffb97b;
-      font-weight: bold;
+      font-weight: 600;
       margin: 0 20px;
-      transition: color 0.3s;
+      transition: 0.3s;
     }
 
     nav a:hover {
       color: #ffffff;
-      text-decoration: underline;
+      text-shadow: 0 0 10px #ffb97b;
     }
 
-    /* Main layout */
+    /* Main container */
     .container {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      align-items: flex-start;
-      gap: 40px;
+      gap: 50px;
+      max-width: 1000px;
+      width: 100%;
     }
 
-    /* Profile section */
-    .profile {
+    /* Glass-style card */
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 30px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+      width: 350px;
       text-align: center;
-      max-width: 300px;
+      animation: floatUp 1.5s ease;
     }
 
+    /* Profile Section */
     .circle-img {
       border-radius: 50%;
       overflow: hidden;
@@ -74,6 +93,7 @@
       height: 150px;
       margin: 0 auto 20px;
       border: 3px solid #ffb97b;
+      animation: floatProfile 4s ease-in-out infinite;
     }
 
     .circle-img img {
@@ -82,53 +102,68 @@
       object-fit: cover;
     }
 
-    .profile h2 {
-      margin: 10px 0 5px;
+    .card h2 {
+      margin-top: 10px;
       font-size: 1.3rem;
     }
 
-    .profile p {
-      font-size: 0.9rem;
-      line-height: 1.5;
+    .card p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #f0f0f0;
+    }
+
+    /* Social Icons */
+    .social-icons {
+      margin-top: 15px;
     }
 
     .social-icons a {
-      margin: 0 8px;
+      margin: 0 10px;
       display: inline-block;
+      transition: transform 0.3s, filter 0.3s;
     }
 
     .social-icons img {
       width: 30px;
       height: 30px;
       filter: brightness(0) invert(1);
-      transition: transform 0.3s;
     }
 
-    .social-icons img:hover {
-      transform: scale(1.1);
+    .social-icons a:hover {
+      transform: scale(1.2);
+      filter: drop-shadow(0 0 10px #ffb97b);
     }
 
-    /* About section */
+    /* About Section */
     .about {
+      flex: 1;
+      min-width: 320px;
       max-width: 600px;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 30px;
+      animation: fadeInUp 1.5s ease;
     }
 
     .about h2 {
-      font-size: 1.8rem;
       color: #ffb97b;
-      margin-bottom: 10px;
+      font-size: 1.8rem;
+      margin-bottom: 15px;
     }
 
     .about p {
+      line-height: 1.8;
       font-size: 1rem;
-      line-height: 1.7;
-      margin-bottom: 30px;
+      color: #f8f8f8;
     }
 
+    /* Info Columns */
     .info-columns {
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
+      margin-top: 30px;
     }
 
     .info {
@@ -138,13 +173,12 @@
     .info h3 {
       color: #ffb97b;
       font-size: 1.2rem;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .info ul {
-      list-style-type: none;
+      list-style: none;
       padding: 0;
-      margin: 0;
     }
 
     .info li {
@@ -152,17 +186,59 @@
       font-size: 0.95rem;
     }
 
+    /* Footer */
     footer {
       text-align: center;
-      margin-top: 60px;
-      font-size: 0.8rem;
-      color: #ccc;
+      margin-top: 40px;
+      font-size: 0.9rem;
+      color: #bbb;
+      animation: fadeIn 2s ease;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes floatProfile {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes floatUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .info {
+        width: 100%;
+        margin-bottom: 20px;
+      }
     }
   </style>
 </head>
 
 <body>
   <div class="overlay">
+    <!-- Header -->
     <header>
       <h1>Welcome to My Personal Web Page</h1>
       <nav>
@@ -171,28 +247,28 @@
       </nav>
     </header>
 
+    <!-- Content -->
     <div class="container">
-      <!-- Left: Profile -->
-      <section class="profile">
+      <!-- Profile Card -->
+      <div class="card">
         <div class="circle-img">
           <img src="./webpage/IMG_20220717_234406.jpg" alt="Profile Picture">
         </div>
         <h2>John Godwin V. Gacho</h2>
         <p>College Student<br>BSIT 2-D<br>Eastern Visayas State University</p>
-
         <div class="social-icons">
           <a href="https://www.instagram.com/i_gotchuuuuu_/" target="_blank"><img src="./webpage/instagram.png" alt="Instagram"></a>
           <a href="https://www.facebook.com/johngodwin.gachoii/?locale=hi_IN" target="_blank"><img src="./webpage/facebook.png" alt="Facebook"></a>
           <a href="mailto:gachojohngodwin@gmail.com"><img src="./webpage/email.png" alt="Email"></a>
         </div>
-      </section>
+      </div>
 
-      <!-- Right: About -->
+      <!-- About Section -->
       <section class="about">
         <h2>About Me</h2>
-        <p>My name is <b>John Godwin Vallepas Gacho</b> (you can call me <b>Win-Win</b>), I’m 19 years old and currently a college student at Eastern Visayas State University taking up Bachelor of Science in Information Technology.  
-        This personal webpage is a requirement for our major subject <b>Web Systems and Technologies 1</b>.  
-        I enjoy designing pages, and while I’m still learning to code, I love bringing creative ideas to life through design and functionality.</p>
+        <p>Hi! I’m <b>John Godwin Vallepas Gacho</b> — you can call me <b>Win-Win</b>.  
+        I’m 19 years old and currently pursuing a Bachelor of Science in Information Technology at Eastern Visayas State University.  
+        I’m passionate about web design and development. While I’m still honing my coding skills, I enjoy creating aesthetic and functional web pages like this one — turning simple ideas into interactive digital experiences.</p>
 
         <div class="info-columns">
           <div class="info">
@@ -216,8 +292,9 @@
       </section>
     </div>
 
+    <!-- Footer -->
     <footer>
-      <p>© 2025 John Godwin Gacho | Personal Webpage Project</p>
+      © 2025 John Godwin Gacho | Designed for Internship Portfolio
     </footer>
   </div>
 </body>
